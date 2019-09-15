@@ -1,0 +1,191 @@
+{
+  "boards": [
+    {
+      "id": 1,
+      "name": "board 1",
+      "todos": {
+        "1000": {
+          "id": "1000",
+          "title": "creare doit!",
+          "active": true,
+          "dependsOn": [
+            1568508653367
+          ]
+        },
+        "1568424757418": {
+          "id": 1568424757418,
+          "title": "devo poter aggiungere todos",
+          "description": "",
+          "active": false,
+          "dependsOn": []
+        },
+        "1568424779664": {
+          "id": 1568424779664,
+          "title": "devo poter eliminare todos",
+          "description": "",
+          "active": false,
+          "dependsOn": []
+        },
+        "1568424790450": {
+          "id": 1568424790450,
+          "title": "devo poter settare todo a done",
+          "description": "",
+          "active": false,
+          "dependsOn": []
+        },
+        "1568424807487": {
+          "id": 1568424807487,
+          "title": "devo poter aggiungere dipendenze a todo",
+          "description": "",
+          "active": false,
+          "dependsOn": []
+        },
+        "1568424820837": {
+          "id": 1568424820837,
+          "title": "mi serve un backend",
+          "description": "",
+          "active": true,
+          "dependsOn": [
+            1568510716350
+          ]
+        },
+        "1568424907190": {
+          "id": 1568424907190,
+          "title": "voglio vedere in cima alla lista i todos senza dipendenze",
+          "description": "",
+          "active": false,
+          "dependsOn": []
+        },
+        "1568424934322": {
+          "id": 1568424934322,
+          "title": "voglio vedere in fondo alla lista i todos con piu dipendenze",
+          "description": "",
+          "active": false,
+          "dependsOn": []
+        },
+        "1568424951716": {
+          "id": 1568424951716,
+          "title": "voglio vedere una rappresentazione grafica della intera board con d3",
+          "description": "",
+          "active": true,
+          "dependsOn": [
+            1568509852911
+          ]
+        },
+        "1568429263468": {
+          "id": 1568429263468,
+          "title": "potrebbe essere utile usare elasticsearch come db, cosi che la ricerca testo e' efficente (tipo per autosuggest)",
+          "description": "",
+          "active": true,
+          "dependsOn": [
+            1568510716350
+          ]
+        },
+        "1568429351112": {
+          "id": 1568429351112,
+          "title": "testare un docker elasticsearch come todo db",
+          "description": "",
+          "active": true,
+          "dependsOn": [
+            1568510716350
+          ]
+        },
+        "1568429413007": {
+          "id": 1568429413007,
+          "title": "in elasticsearch ogni board sara un indice",
+          "description": "",
+          "active": true,
+          "dependsOn": [
+            1568429263468
+          ]
+        },
+        "1568505436753": {
+          "id": 1568505436753,
+          "title": "mvp first for my personal use",
+          "description": "",
+          "active": true,
+          "dependsOn": [
+            1568508653367
+          ]
+        },
+        "1568508653367": {
+          "id": 1568508653367,
+          "title": "creare mvp",
+          "description": "",
+          "active": true,
+          "dependsOn": [
+            1568424757418,
+            1568424779664,
+            1568424807487,
+            1568424790450,
+            1568424907190,
+            1568424934322,
+            1568508851811
+          ]
+        },
+        "1568508707981": {
+          "id": 1568508707981,
+          "title": "visualizza dipendenze",
+          "description": "",
+          "active": true,
+          "dependsOn": [
+            1568424951716
+          ]
+        },
+        "1568508851811": {
+          "id": 1568508851811,
+          "title": "voglio vedere numero dipendenze su todo",
+          "description": "",
+          "active": false,
+          "dependsOn": []
+        },
+        "1568509852911": {
+          "id": 1568509852911,
+          "title": "usare https://www.npmjs.com/package/react-force-graph",
+          "description": "",
+          "active": true,
+          "dependsOn": []
+        },
+        "1568510673770": {
+          "id": 1568510673770,
+          "title": "episode 2",
+          "description": "",
+          "active": true,
+          "dependsOn": [
+            1568424820837
+          ]
+        },
+        "1568510716350": {
+          "id": 1568510716350,
+          "title": "start episode 2",
+          "description": "",
+          "active": true,
+          "dependsOn": [
+            1568508653367
+          ]
+        },
+        "1568510907818": {
+          "id": 1568510907818,
+          "title": "aggiungere checkbox done",
+          "description": "",
+          "active": false,
+          "dependsOn": []
+        },
+        "1568510931461": {
+          "id": 1568510931461,
+          "title": "se active == false metter in fondo alla lista",
+          "description": "",
+          "active": false,
+          "dependsOn": []
+        },
+        "1568510992351": {
+          "id": 1568510992351,
+          "title": "creare repository on github (questo lo facciamo un po anche per la gloria)",
+          "description": "",
+          "active": true,
+          "dependsOn": []
+        }
+      }
+    }
+  ]
+}
