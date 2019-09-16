@@ -31,6 +31,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      endpoint: process.env.REACT_APP_SAT_BASE_URL,
       board: {
         todos: {},
         metadata: {}
@@ -85,6 +86,9 @@ class App extends React.Component {
     }
     return (
       <AppContext.Provider value={this.state}>
+        <div>-------</div>
+        <div>{process.env.REACT_APP_SAT_BASE_URL}</div>
+        <div>-------</div>
         <Board />
       </AppContext.Provider>
     );

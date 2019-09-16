@@ -1,22 +1,10 @@
-version: '3'
-
+version: "3"
 services:
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.3.2
-    environment:
-      - discovery.type=single-node
-      # - cluster.name=docker-cluster
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+  json-server:
+    image: vimagick/json-server
+    command: -H 0.0.0.0 -p 3000 -w db.json
+    ports:
+      - "3000:3000"
     volumes:
-      - ./esdata01:/usr/share/elasticsearch/data
-    ports:
-      - "9200:9200"
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.3.2
-    ports:
-      - "5601:5601"
+      - ./data:/data
+    restart: always

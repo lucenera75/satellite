@@ -9,7 +9,8 @@
           "title": "creare doit!",
           "active": true,
           "dependsOn": [
-            1568508653367
+            1568508653367,
+            1568581178471
           ]
         },
         "1568424757418": {
@@ -120,7 +121,8 @@
             1568424790450,
             1568424907190,
             1568424934322,
-            1568508851811
+            1568508851811,
+            1568581056984
           ]
         },
         "1568508707981": {
@@ -181,6 +183,20 @@
         "1568510992351": {
           "id": 1568510992351,
           "title": "creare repository on github (questo lo facciamo un po anche per la gloria)",
+          "description": "",
+          "active": true,
+          "dependsOn": []
+        },
+        "1568581056984": {
+          "id": 1568581056984,
+          "title": "coinfigure lightsail",
+          "description": "",
+          "active": true,
+          "dependsOn": []
+        },
+        "1568581178471": {
+          "id": 1568581178471,
+          "title": "make something beautiful",
           "description": "",
           "active": true,
           "dependsOn": []
