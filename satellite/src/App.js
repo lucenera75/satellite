@@ -3,6 +3,7 @@ import "./App.css";
 import AppContext from "./AppContext";
 import axios from "axios";
 import Board from "./Board";
+import deepEqual from "deep-equal";
 
 /*
  *
@@ -19,17 +20,23 @@ import Board from "./Board";
  */
 
 const loadBoard = async () => {
-  const board = await axios.get("http://localhost:9898/boards/1");
+  const board = await axios.get(
+    `${process.env.REACT_APP_SAT_BASE_URL}/boards/1`
+  );
   return board;
 };
 const saveBoard = async board => {
-  const result = await axios.put("http://localhost:9898/boards/1", board);
+  const result = await axios.put(
+    `${process.env.REACT_APP_SAT_BASE_URL}/boards/1`,
+    board
+  );
   // console.log(result)
 };
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.lastCheckpoint = false;
     this.state = {
       endpoint: process.env.REACT_APP_SAT_BASE_URL,
       board: {
@@ -38,15 +45,22 @@ class App extends React.Component {
       },
       currentTodo: false,
       createAndEditNewTodo: () => {
+        const todo = this.state.createNewTodo("");
+        this.state.setCurrentTodoId(todo.id);
+      },
+      createNewTodo: title => {
         const todo = {
           id: new Date().getTime(),
-          title: "",
+          dateCreate: new Date().getTime(),
+          lastUpdate: new Date().getTime(),
+          dateCompleted: false,
+          title: title,
           description: "",
           active: true,
           dependsOn: []
         };
         this.state.addTodo(todo);
-        this.state.setCurrentTodoId(todo.id);
+        return todo;
       },
       getCurrentTodo: () => {
         return this.state.board.todos[this.state.currentTodoId];
@@ -67,6 +81,7 @@ class App extends React.Component {
       },
       updateTodo: todo => {
         const board = { ...this.state.board };
+        todo.lastUpdate = new Date().getTime();
         board.todos[todo.id] = todo;
         this.state.setBoard(board);
       }
@@ -76,8 +91,17 @@ class App extends React.Component {
   async componentDidMount() {
     const board = (await loadBoard()).data;
     console.log(board);
+    this.lastCheckpoint = JSON.stringify(board);
     this.state.setBoard(board);
-    setInterval(() => saveBoard(this.state.board), 3000);
+    setInterval(() => {
+      if (JSON.stringify(this.state.board) !== this.lastCheckpoint) {
+        console.log("committing changes");
+        saveBoard(this.state.board);
+        this.lastCheckpoint = JSON.stringify(this.state.board);
+      } else {
+        console.log("no changes");
+      }
+    }, 3000);
   }
 
   render() {
@@ -86,9 +110,6 @@ class App extends React.Component {
     }
     return (
       <AppContext.Provider value={this.state}>
-        <div>-------</div>
-        <div>{process.env.REACT_APP_SAT_BASE_URL}</div>
-        <div>-------</div>
         <Board />
       </AppContext.Provider>
     );

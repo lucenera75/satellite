@@ -5,10 +5,10 @@ import Autosuggest from "react-autosuggest";
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
 // input value for every given suggestion.
-const getSuggestionValue = suggestion => suggestion.title;
+const getSuggestionValue = suggestion => suggestion.title || "";
 
 // Use your imagination to render suggestions.
-const renderSuggestion = suggestion => <div>{suggestion.title}</div>;
+const renderSuggestion = suggestion => <div>{suggestion.title || ""}</div>;
 
 export default class TodoSuggest extends React.Component {
   static contextType = AppContext;
@@ -86,8 +86,11 @@ export default class TodoSuggest extends React.Component {
     return inputLength === 0
       ? []
       : Object.values(this.context.board.todos).filter(value => {
+          // do not suggest if already a dependency 
           if (todo.dependsOn.indexOf(value.id) >=0) {return false}
-          const tokens = value.title.split(re).map(t => t.toLowerCase());
+          // do not suggest if not active
+          if (!value.active) {return false} 
+          const tokens = value && value.title.split(re).map(t => t.toLowerCase()) || [];
           // console.log(tokens);
           const validtokens = tokens.filter(t => {
             const test =
@@ -137,11 +140,17 @@ export default class TodoSuggest extends React.Component {
       value,
       onChange: this.onChange,
       onKeyPress: (e) => {
-        console.log("key ",e.key)
+        // console.log("key ",e.key)
         if (e.key === "Enter"){
-          console.log(this.suggestion,this.state.value)
+          // console.log(this.suggestion,this.state.value)
           const todo = this.context.getCurrentTodo()
-          todo.dependsOn.push(this.suggestion.id)
+          if (this.suggestion) {
+            todo.dependsOn.push(this.suggestion.id)
+            this.suggestion = false;
+          } else {
+            const newTodo = this.context.createNewTodo(value)
+            todo.dependsOn.push(newTodo.id)
+          }
           this.context.updateTodo(todo)
         }
         // if (e.key === 'Delete') {

@@ -51,7 +51,9 @@ export default () => {
         <li>
           <TodoSuggest />
         </li>
-        {context.getCurrentTodo().dependsOn.map(tid => {
+        {context.getCurrentTodo().dependsOn
+        .filter(tid => context.board.todos[tid])
+        .map(tid => {
           return (
             <li key={tid}>
               <button

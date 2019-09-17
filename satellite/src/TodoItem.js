@@ -7,9 +7,8 @@ export default ({ todo }) => {
     context.currentTodoId === todo.id
       ? "list-group-item active"
       : "list-group-item";
-  debugger
   const allDeps = todo.dependsOn.map(d => context.board.todos[d]);
-  const openDeps = allDeps.filter(d => d.active);
+  const openDeps = allDeps.filter(d => d && d.active);
   return (
     <li
       className="list-group-item"
@@ -27,6 +26,11 @@ export default ({ todo }) => {
         checked={!todo.active}
         onChange={() => {
           todo.active = !todo.active;
+          if (todo.active) {
+            todo.dateCompleted = new Date().getTime();
+          } else {
+            todo.dateCompleted = false;
+          }
           context.updateTodo(todo);
         }}
       />
