@@ -1,7 +1,7 @@
 import React from "react";
 import AppContext from "./AppContext";
 import Autosuggest from "react-autosuggest";
-
+import {addToSearch, removeFromSearch, search} from "./Searcher";
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
 // input value for every given suggestion.
@@ -27,85 +27,11 @@ export default class TodoSuggest extends React.Component {
     this.getSuggestions = this.getSuggestions.bind(this);
   }
 
-  getSuggestions = value => {
-    const punct =
-      "\\[" +
-      "\\!" +
-      '\\"' +
-      "\\#" +
-      "\\$" + // since javascript does not
-      "\\%" +
-      "\\&" +
-      "\\'" +
-      "\\(" +
-      "\\)" + // support POSIX character
-      "\\*" +
-      "\\+" +
-      "\\," +
-      "\\\\" +
-      "\\-" + // classes, we'll need our
-      "\\." +
-      "\\/" +
-      "\\:" +
-      "\\;" +
-      "\\<" + // own version of [:punct:]
-      "\\=" +
-      "\\>" +
-      "\\?" +
-      "\\@" +
-      "\\[" +
-      "\\]" +
-      "\\^" +
-      "\\_" +
-      "\\`" +
-      "\\{" +
-      "\\|" +
-      "\\}" +
-      "\\~" +
-      "\\]";
-    const re = new RegExp( // tokenizer
-      "\\s*" + // discard possible leading whitespace
-      "(" + // start capture group
-      "\\.{3}" + // ellipsis (must appear before punct)
-      "|" + // alternator
-      "\\w+\\-\\w+" + // hyphenated words (must appear before punct)
-      "|" + // alternator
-      "\\w+'(?:\\w+)?" + // compound words (must appear before punct)
-      "|" + // alternator
-      "\\w+" + // other words
-      "|" + // alternator
-      "[" +
-      punct +
-      "]" + // punct
-        ")" // end capture group
-    );
-    const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
-    console.log(inputValue);
-    const todo = this.context.getCurrentTodo()
-    return inputLength === 0
-      ? []
-      : Object.values(this.context.board.todos).filter(value => {
-          // do not suggest if already a dependency 
-          if (todo.dependsOn.indexOf(value.id) >=0) {return false}
-          // do not suggest if not active
-          if (!value.active) {return false} 
-          const tokens = value && value.title.split(re).map(t => t.toLowerCase()) || [];
-          // console.log(tokens);
-          const validtokens = tokens.filter(t => {
-            const test =
-              t.trim() !== "" &&
-              inputValue.trim() != "" &&
-              (t.toLowerCase().indexOf(inputValue.toLowerCase()) >= 0 ||
-                inputValue.toLowerCase().indexOf(t.toLowerCase()) >= 0);
-            // console.log(t, inputValue, test);
-            return test;
-          });
-
-          // const found = tokens.indexOf(inputValue.toLowerCase()) >= 0;
-          // console.log("validtokens: ", validtokens);
-          return validtokens.length > 0;
-        });
+  getSuggestions = async value => {
+    const ids = (await search(value));
+    return ids
+    .filter(id => this.context.board.todos[id].active && id !== this.context.getCurrentTodo().id)
+    .map(id => this.context.board.todos[id])
   };
 
   onChange = (event, { newValue }) => {
@@ -116,9 +42,9 @@ export default class TodoSuggest extends React.Component {
 
   // Autosuggest will call this function every time you need to update suggestions.
   // You already implemented this logic above, so just use it.
-  onSuggestionsFetchRequested = ({ value }) => {
+  onSuggestionsFetchRequested = async ({ value }) => {
     this.setState({
-      suggestions: this.getSuggestions(value)
+      suggestions: await this.getSuggestions(value)
     });
   };
 

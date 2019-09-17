@@ -3,7 +3,7 @@ import "./App.css";
 import AppContext from "./AppContext";
 import axios from "axios";
 import Board from "./Board";
-import deepEqual from "deep-equal";
+import {addToSearch, removeFromSearch, search} from "./Searcher";
 
 /*
  *
@@ -43,6 +43,12 @@ class App extends React.Component {
         todos: {},
         metadata: {}
       },
+      filteredIds: [],
+      searchTerms: "",
+      setSearchTerms: (searchTerms) => {
+        this.setState({searchTerms})
+        search(searchTerms).then(filteredIds => this.setState({filteredIds}))
+      },
       currentTodo: false,
       createAndEditNewTodo: () => {
         const todo = this.state.createNewTodo("");
@@ -72,17 +78,20 @@ class App extends React.Component {
       addTodo: todo => {
         const board = { ...this.state.board };
         board.todos[todo.id] = todo;
+        addToSearch(todo.id, todo.title);
         this.state.setBoard(board);
       },
       removeTodo: todo => {
         const board = { ...this.state.board };
         delete board.todos[todo.id];
+        removeFromSearch(todo.id);
         this.state.setBoard(board);
       },
       updateTodo: todo => {
         const board = { ...this.state.board };
         todo.lastUpdate = new Date().getTime();
         board.todos[todo.id] = todo;
+        addToSearch(todo.id, todo.title);
         this.state.setBoard(board);
       }
     };
@@ -90,7 +99,7 @@ class App extends React.Component {
 
   async componentDidMount() {
     const board = (await loadBoard()).data;
-    console.log(board);
+    Object.values(board.todos).forEach(t => addToSearch(t.id, t.title))
     this.lastCheckpoint = JSON.stringify(board);
     this.state.setBoard(board);
     setInterval(() => {

@@ -6,6 +6,8 @@
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "deep-equal": "^1.1.0",
+    "fl": "^0.1.1",
+    "flexsearch": "^0.6.30",
     "jquery": "^3.4.1",
     "popper": "^1.0.1",
     "react": "^16.9.0",

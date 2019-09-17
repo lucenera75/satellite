@@ -17,6 +17,12 @@ export default () => {
           <TodoEdit />
         </div>
         <div style={{ width: "600px", height: "300px", overflow: "scroll" }}>
+          <input
+            type="text"
+            className="form-control"
+            value={context.searchTerms}
+            onChange={e => context.setSearchTerms(e.target.value)}
+          />
           <ul className="list-group">
             {Object.values(context.board.todos)
               .sort((a, b) => {
@@ -27,6 +33,12 @@ export default () => {
                 const allDepsB = b.dependsOn.map(d => context.board.todos[d]);
                 const openDepsB = allDepsB.filter(d => d && d.active);
                 return openDepsA.length - openDepsB.length;
+              })
+              .filter(todo => {
+                if (!context.searchTerms.trim()) {
+                  return true;
+                }
+                return context.filteredIds.indexOf(todo.id) >= 0;
               })
               .map(todo => (
                 <TodoItem key={todo.id} todo={todo} />
