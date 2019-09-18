@@ -104,7 +104,9 @@ class App extends React.Component {
     Object.values(board.todos).forEach(t => addToSearch(t.id, t.title))
     this.lastCheckpoint = JSON.stringify(board);
     this.state.setBoard(board);
+    this.setState({boardLoaded:true})
     setInterval(() => {
+      if (!this.state.boardLoaded) {return}
       if (JSON.stringify(this.state.board) !== this.lastCheckpoint) {
         console.log("committing changes");
         saveBoard(this.state.board);
