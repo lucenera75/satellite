@@ -4774,6 +4774,11 @@ execa@^1.0.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
+exenv@^1.2.0:
+  version "1.2.2"
+  resolved "http://verdaccio.inf.9spokes.io/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
+  integrity sha1-KueOhdmJQVhnCwPUe+wfA72Ru50=
+
 exit@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/exit/-/exit-0.1.2.tgz#0632638f8d877cc82107d30a0fff1a17cba1cd0c"
@@ -10091,6 +10096,21 @@ react-kapsule@^1.4.2:
   resolved "http://verdaccio.inf.9spokes.io/react-kapsule/-/react-kapsule-1.4.2.tgz#f749d7096d1b06794aa1279cddc69fd5e74ddd54"
   integrity sha512-HtPb9furBOzNLY24Xboib1aozWjqIxtn2xe1OyYO6mIeqLuRdEYJ35HNDGGltP6iq20i2GLcyTyi6LoYl6uvCQ==
 
+react-lifecycles-compat@^3.0.0:
+  version "3.0.4"
+  resolved "http://verdaccio.inf.9spokes.io/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
+  integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-modal@^3.10.1:
+  version "3.10.1"
+  resolved "http://verdaccio.inf.9spokes.io/react-modal/-/react-modal-3.10.1.tgz#ba37927871830c798f51404aa6bc71ff7a5e4c16"
+  integrity sha512-2DKIfdOc8+WY+SYJ/xf/WBwOYMmNAYAyGkYlc4e1TCs9rk1xY4QBz04hB3UHGcrLChh7ce77rHAe6VPNmuLYsQ==
+  dependencies:
+    exenv "^1.2.0"
+    prop-types "^15.5.10"
+    react-lifecycles-compat "^3.0.0"
+    warning "^4.0.3"
+
 react-scripts@3.1.1:
   version "3.1.1"
   resolved "http://verdaccio.inf.9spokes.io/react-scripts/-/react-scripts-3.1.1.tgz#1796bc92447f3a2d3072c3b71ca99f88d099c48d"
@@ -11733,6 +11753,11 @@ three-render-objects@^1.5.4:
     three-orbit-controls "^82.1.0"
     three-trackballcontrols "^0.0.8"
 
+three-spritetext@^1.1.1:
+  version "1.1.1"
+  resolved "http://verdaccio.inf.9spokes.io/three-spritetext/-/three-spritetext-1.1.1.tgz#38cdb7593d36f3b2bde78310efec34221cda996a"
+  integrity sha512-NmJ+0BaCJmLtGFD/XLnJTpDkDeONaefL6T4c+j+fxFOMGrvjITiY8aqOSgjWx9xL/DEaaUqEUk28LDVNwo65Eg==
+
 three-trackballcontrols@^0.0.8:
   version "0.0.8"
   resolved "http://verdaccio.inf.9spokes.io/three-trackballcontrols/-/three-trackballcontrols-0.0.8.tgz#4af85312d211387e451023f9bef576094993a118"
@@ -11742,6 +11767,11 @@ three@^0.107.0:
   version "0.107.0"
   resolved "http://verdaccio.inf.9spokes.io/three/-/three-0.107.0.tgz#0c862c348d61bd3f22058e01f5e771c1294315a1"
   integrity sha512-vqbKJRLBEviPVa7poEzXocobicwxzsctr5mnymA7n8fEzcVS49rYP0RrwqZ98JqujRoruK+/YzcchNpRP+kXsQ==
+
+three@^0.108.0:
+  version "0.108.0"
+  resolved "http://verdaccio.inf.9spokes.io/three/-/three-0.108.0.tgz#53d26597c7932f214bb43f4655e566d2058143b5"
+  integrity sha512-d1ysIXwi8qTlbmMwrTxi5pYiiYIflEr0e48krP0LAY8ndS8c6fkLHn6NvRT+o76/Fs9PBLxFViuI62iGVWwwlg==
 
 throat@^4.0.0:
   version "4.1.0"
@@ -12290,6 +12320,13 @@ walker@^1.0.7, walker@~1.0.5:
   integrity sha1-L3+bj9ENZ3JisYqITijRlhjgKPs=
   dependencies:
     makeerror "1.0.x"
+
+warning@^4.0.3:
+  version "4.0.3"
+  resolved "http://verdaccio.inf.9spokes.io/warning/-/warning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3"
+  integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
+  dependencies:
+    loose-envify "^1.0.0"
 
 watchpack@^1.6.0:
   version "1.6.0"

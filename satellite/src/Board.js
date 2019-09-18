@@ -1,7 +1,7 @@
 import React from "react";
 import AppContext from "./AppContext";
 import TodoItem from "./TodoItem";
-import TodoEdit from "./TodoEdit";
+import ModalTodoEdit from "./ModalTodoEdit";
 import ForceGraph from "./ForceGraph";
 export default () => {
   const context = React.useContext(AppContext);
@@ -13,10 +13,11 @@ export default () => {
           flexDirection: "row"
         }}
       >
-        <div style={{ width: "600px", height: "300px", overflow: "scroll" }}>
+        {/* <div style={{ width: "600px", height: "300px", overflow: "scroll" }}>
           <TodoEdit />
-        </div>
-        <div style={{ width: "600px", height: "300px", overflow: "scroll" }}>
+        </div> */}
+        <ModalTodoEdit />
+        <div style={{ width: "600px", height: "800px", overflow: "scroll" }}>
           <input
             type="text"
             className="form-control"
@@ -45,8 +46,8 @@ export default () => {
               ))}
           </ul>
         </div>
-      </div>
       <ForceGraph />
+      </div>
     </div>
   );
 };

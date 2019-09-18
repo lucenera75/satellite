@@ -69,9 +69,11 @@ class App extends React.Component {
         return todo;
       },
       getCurrentTodo: () => {
-        return this.state.board.todos[this.state.currentTodoId];
+        return this.state.currentTodoId && this.state.board.todos[this.state.currentTodoId];
       },
       setCurrentTodoId: todoId => {
+        console.log("setting todo id", todoId)
+        debugger
         this.setState({ currentTodoId: todoId });
       },
       setBoard: board => this.setState({ board }),

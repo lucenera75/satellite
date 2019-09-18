@@ -14,7 +14,10 @@
     "react-autosuggest": "^9.4.3",
     "react-dom": "^16.9.0",
     "react-force-graph": "^1.24.1",
-    "react-scripts": "3.1.1"
+    "react-modal": "^3.10.1",
+    "react-scripts": "3.1.1",
+    "three": "^0.108.0",
+    "three-spritetext": "^1.1.1"
   },
   "devDependencies": {
     "eslint-utils": "^1.4.2"

@@ -23,14 +23,17 @@ export default ({ todo }) => {
     <li
       className={classNames.join(" ")}      
       tabIndex="0"
-      onFocus={() => context.setCurrentTodoId(todo.id)}
       onKeyPress={e => {
         if (e.key === "Delete") {
           context.removeTodo(todo);
         }
+        if (e.key === "Enter") {
+          context.setCurrentTodoId(todo.id);
+        }
       }}
-    >
+    >      
       <input
+        className="form-check-input"
         type="checkbox"
         checked={!todo.active}
         onChange={() => {
@@ -46,6 +49,11 @@ export default ({ todo }) => {
       {`-${todo.title}-${openDeps.length}/${allDeps.length}` }
       {todo.dateCreate && `- created on: ${new Date(todo.dateCreate).toLocaleDateString()}`}
       {todo.dateCompleted && `- completed on: ${new Date(todo.dateCompleted).toLocaleDateString()}`}
+      <button
+      style={{float:"right"}}
+      className="btn btn-primary"
+      onClick={() => context.setCurrentTodoId(todo.id)}
+      >E</button>
     </li>
   );
 };
