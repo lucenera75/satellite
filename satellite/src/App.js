@@ -76,7 +76,7 @@ class App extends React.Component {
         debugger
         this.setState({ currentTodoId: todoId });
       },
-      setBoard: board => this.setState({ board }),
+      setBoard: (board,cb) => this.setState({ board },cb),
       addTodo: todo => {
         const board = { ...this.state.board };
         board.todos[todo.id] = todo;
@@ -89,12 +89,12 @@ class App extends React.Component {
         removeFromSearch(todo.id);
         this.state.setBoard(board);
       },
-      updateTodo: todo => {
+      updateTodo: (todo,cb) => {
         const board = { ...this.state.board };
         todo.lastUpdate = new Date().getTime();
         board.todos[todo.id] = todo;
         addToSearch(todo.id, todo.title);
-        this.state.setBoard(board);
+        this.state.setBoard(board,cb);
       }
     };
   }

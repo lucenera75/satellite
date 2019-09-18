@@ -1,7 +1,8 @@
 import React from "react";
 import AppContext from "./AppContext";
 import Autosuggest from "react-autosuggest";
-import {addToSearch, removeFromSearch, search} from "./Searcher";
+import { addToSearch, removeFromSearch, search } from "./Searcher";
+import recursiveCheck from "./recusiveCheck";
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
 // input value for every given suggestion.
@@ -28,10 +29,14 @@ export default class TodoSuggest extends React.Component {
   }
 
   getSuggestions = async value => {
-    const ids = (await search(value));
+    const ids = await search(value);
     return ids
-    .filter(id => this.context.board.todos[id].active && id !== this.context.getCurrentTodo().id)
-    .map(id => this.context.board.todos[id])
+      .filter(
+        id =>
+          this.context.board.todos[id].active &&
+          id !== this.context.getCurrentTodo().id
+      )
+      .map(id => this.context.board.todos[id]);
   };
 
   onChange = (event, { newValue }) => {
@@ -60,34 +65,43 @@ export default class TodoSuggest extends React.Component {
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      className:"form-control",
-      style:{wordBreak: "break-word"},
+      className: "form-control",
+      style: { wordBreak: "break-word" },
       placeholder: "...",
       value,
       onChange: this.onChange,
-      onKeyPress: (e) => {
+      onKeyPress: e => {
         // console.log("key ",e.key)
-        if (e.key === "Enter"){
+        if (e.key === "Enter") {
           // console.log(this.suggestion,this.state.value)
-          const todo = this.context.getCurrentTodo()
+          const todo = this.context.getCurrentTodo();
+          let newDepId = false
           if (this.suggestion) {
-            todo.dependsOn.push(this.suggestion.id)
+            newDepId = this.suggestion.id
             this.suggestion = false;
           } else {
-            const newTodo = this.context.createNewTodo(value)
-            todo.dependsOn.push(newTodo.id)
+            const newTodo = this.context.createNewTodo(value);
+            newDepId = newTodo.id
           }
-          this.context.updateTodo(todo)
+          todo.dependsOn.push(newDepId);
+          this.context.updateTodo(todo, () => {
+            try {
+              recursiveCheck(todo.id, this.context.board.todos);
+            } catch (err) {
+              alert(err)
+              todo.dependsOn = todo.dependsOn.filter(tid => tid!==newDepId)
+              this.context.updateTodo(todo)
+            }
+          });
         }
         // if (e.key === 'Delete') {
         //   context.removeTodo(todo)
         // }
-    }
-
+      }
     };
 
     // Finally, render it!
-    console.log(value)
+    console.log(value);
     return (
       <Autosuggest
         suggestions={suggestions}
@@ -96,7 +110,9 @@ export default class TodoSuggest extends React.Component {
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
         inputProps={inputProps}
-        onSuggestionSelected={(e,{suggestion}) => {this.suggestion = suggestion}}        
+        onSuggestionSelected={(e, { suggestion }) => {
+          this.suggestion = suggestion;
+        }}
       />
     );
   }
