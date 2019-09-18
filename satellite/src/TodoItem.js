@@ -9,11 +9,20 @@ export default ({ todo }) => {
       : "list-group-item";
   const allDeps = todo.dependsOn.map(d => context.board.todos[d]);
   const openDeps = allDeps.filter(d => d && d.active);
+  const classNames = ["list-group-item"]
+  if (openDeps.length===0) {
+    classNames.push("text-success")
+  } else {
+    classNames.push("text-danger")
+  }
+  if (!todo.active) {
+    classNames.push("text-muted")
+    classNames.push("text-line-through")
+  }
   return (
     <li
-      className="list-group-item"
+      className={classNames.join(" ")}      
       tabIndex="0"
-      className={className}
       onFocus={() => context.setCurrentTodoId(todo.id)}
       onKeyPress={e => {
         if (e.key === "Delete") {
@@ -26,7 +35,7 @@ export default ({ todo }) => {
         checked={!todo.active}
         onChange={() => {
           todo.active = !todo.active;
-          if (todo.active) {
+          if (!todo.active) {
             todo.dateCompleted = new Date().getTime();
           } else {
             todo.dateCompleted = false;
@@ -34,7 +43,9 @@ export default ({ todo }) => {
           context.updateTodo(todo);
         }}
       />
-      {`-${todo.title}-${openDeps.length}/${allDeps.length}`}
+      {`-${todo.title}-${openDeps.length}/${allDeps.length}` }
+      {todo.dateCreate && `- created on: ${new Date(todo.dateCreate).toLocaleDateString()}`}
+      {todo.dateCompleted && `- completed on: ${new Date(todo.dateCompleted).toLocaleDateString()}`}
     </li>
   );
 };

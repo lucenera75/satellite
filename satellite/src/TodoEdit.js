@@ -54,8 +54,14 @@ export default () => {
         {context.getCurrentTodo().dependsOn
         .filter(tid => context.board.todos[tid])
         .map(tid => {
+          let className = ""
+          if (context.board.todos[tid].active) {
+            className += " text-success"
+          } else {
+            className += " text-muted text-line-through"
+          }         
           return (
-            <li key={tid}>
+            <li key={tid} className={className}>
               <button
                 onClick={() => {
                   const todo = context.getCurrentTodo();
