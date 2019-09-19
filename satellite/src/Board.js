@@ -4,7 +4,13 @@ import TodoItem from "./TodoItem";
 import ModalTodoEdit from "./ModalTodoEdit";
 import ForceGraph from "./ForceGraph";
 export default () => {
+  // React.memo((props) => {
+  //   <ForceGraph />
+  // })
   const context = React.useContext(AppContext);
+  const memoForceGraph = React.useMemo(() => <ForceGraph />, [
+    JSON.stringify(context.board)
+  ]);
   return (
     <div>
       <div
@@ -33,7 +39,11 @@ export default () => {
                 const openDepsA = allDepsA.filter(d => d && d.active);
                 const allDepsB = b.dependsOn.map(d => context.board.todos[d]);
                 const openDepsB = allDepsB.filter(d => d && d.active);
-                return openDepsA.length - openDepsB.length;
+                if (openDepsB.length > 0) {
+                  return openDepsA.length - openDepsB.length;
+                }
+                return b.weight - a.weight;
+                // return
               })
               .filter(todo => {
                 if (!context.searchTerms.trim()) {
@@ -46,7 +56,8 @@ export default () => {
               ))}
           </ul>
         </div>
-      <ForceGraph />
+        {/* <MemoForceGraph /> */}
+        {memoForceGraph}
       </div>
     </div>
   );

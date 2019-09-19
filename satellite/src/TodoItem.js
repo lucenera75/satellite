@@ -47,6 +47,7 @@ export default ({ todo }) => {
         }}
       />
       {`-${todo.title}-${openDeps.length}/${allDeps.length}` }
+      val: {todo.weight}
       {todo.dateCreate && `- created on: ${new Date(todo.dateCreate).toLocaleDateString()}`}
       {todo.dateCompleted && `- completed on: ${new Date(todo.dateCompleted).toLocaleDateString()}`}
       <button

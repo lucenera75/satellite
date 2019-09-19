@@ -4,6 +4,7 @@ import AppContext from "./AppContext";
 import axios from "axios";
 import Board from "./Board";
 import {addToSearch, removeFromSearch, search} from "./Searcher";
+import getCumulativeValue from "./getCumulativeValue"
 
 /*
  *
@@ -77,6 +78,12 @@ class App extends React.Component {
         this.setState({ currentTodoId: todoId });
       },
       setBoard: (board,cb) => this.setState({ board },cb),
+      refreshWeights: () => {
+        Object.values(this.state.board.todos).forEach(todo => {
+          todo.weight = getCumulativeValue(todo.id, Object.values(this.state.board.todos))
+        })
+        this.state.setBoard({...this.state.board})
+      },
       addTodo: todo => {
         const board = { ...this.state.board };
         board.todos[todo.id] = todo;
@@ -108,6 +115,7 @@ class App extends React.Component {
     setInterval(() => {
       if (!this.state.boardLoaded) {return}
       if (JSON.stringify(this.state.board) !== this.lastCheckpoint) {
+        this.state.refreshWeights()
         console.log("committing changes");
         saveBoard(this.state.board);
         this.lastCheckpoint = JSON.stringify(this.state.board);

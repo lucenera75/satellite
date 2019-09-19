@@ -14,7 +14,8 @@ export default ({ todo }) => {
         data.nodes.push({
           id: todo.id + "",
           title: todo.title,
-          active: todo.active
+          active: todo.active,
+          val: todo.weight
         });
       }
     } else {
