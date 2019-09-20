@@ -5,7 +5,7 @@ import axios from "axios";
 import Board from "./Board";
 import {addToSearch, removeFromSearch, search} from "./Searcher";
 import getCumulativeValue from "./getCumulativeValue"
-
+import BoardsNavBar from  "./BoardsNavBar"
 /*
  *
  * board: {
@@ -20,17 +20,45 @@ import getCumulativeValue from "./getCumulativeValue"
  * when load first this is to load a board and invoke setBoard
  */
 
-const loadBoard = async () => {
-  const board = await axios.get(
-    `${process.env.REACT_APP_SAT_BASE_URL}/boards/1`
+const loadBoards = async () => {
+  const boards = await axios.get(
+    `${process.env.REACT_APP_SAT_BASE_URL}/boards`
   );
+  return boards.data;
+}
+const boardId = window.location.pathname.substr(1) || "1"
+let isNew = false
+const loadBoard = async () => {
+  let board = {
+    todos: {},
+    metadata: {}
+  }
+  try {
+    board = (await axios.get(
+      `${process.env.REACT_APP_SAT_BASE_URL}/boards/${boardId}`
+    )).data;
+    isNew = false
+  } catch (err) {
+    alert("creating")
+    console.log(err)
+    isNew = true
+  }
   return board;
 };
 const saveBoard = async board => {
-  const result = await axios.put(
-    `${process.env.REACT_APP_SAT_BASE_URL}/boards/1`,
-    board
-  );
+  if (isNew) {
+    board.id=boardId
+    await axios.post(
+      `${process.env.REACT_APP_SAT_BASE_URL}/boards`,
+      board
+    );
+    isNew = false
+  } else {
+    await axios.put(
+      `${process.env.REACT_APP_SAT_BASE_URL}/boards/${boardId}`,
+      board
+    );
+  }
   // console.log(result)
 };
 
@@ -44,6 +72,7 @@ class App extends React.Component {
         todos: {},
         metadata: {}
       },
+      availableBoards: [],
       filteredIds: [],
       searchTerms: "",
       setSearchTerms: (searchTerms) => {
@@ -55,7 +84,7 @@ class App extends React.Component {
         const todo = this.state.createNewTodo("");
         this.state.setCurrentTodoId(todo.id);
       },
-      createNewTodo: title => {
+      createNewTodo: (title, flush=true) => {
         const todo = {
           id: new Date().getTime(),
           dateCreate: new Date().getTime(),
@@ -66,7 +95,9 @@ class App extends React.Component {
           active: true,
           dependsOn: []
         };
-        this.state.addTodo(todo);
+        if (flush) {
+          this.state.addTodo(todo);
+        }
         return todo;
       },
       getCurrentTodo: () => {
@@ -107,11 +138,18 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
-    const board = (await loadBoard()).data;
+    const board = await loadBoard();
     Object.values(board.todos).forEach(t => addToSearch(t.id, t.title))
     this.lastCheckpoint = JSON.stringify(board);
     this.state.setBoard(board);
     this.setState({boardLoaded:true})
+    if (isNew) {
+      const firstTodo = this.state.createNewTodo("do something amazing", false)
+      this.state.addTodo(firstTodo);
+    }
+    loadBoards().then(boards => {
+      this.setState({availableBoards: boards.map(b => b.id)})
+    })
     setInterval(() => {
       if (!this.state.boardLoaded) {return}
       if (JSON.stringify(this.state.board) !== this.lastCheckpoint) {
@@ -131,6 +169,7 @@ class App extends React.Component {
     }
     return (
       <AppContext.Provider value={this.state}>
+        <BoardsNavBar />
         <Board />
       </AppContext.Provider>
     );
