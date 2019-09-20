@@ -6,10 +6,9 @@ export default () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <ul class="navbar-nav">
-        {context.availableBoards.map(b => {
-          debugger
+        {context.availableBoards.map(b => {          
           return (
-            <li className="nav-item">
+            <li className={"nav-item " + (b === context.board.id ? "active" : " ")}>
               <a className="nav-link" href={`/${b}`}>
                 {b}
               </a>
