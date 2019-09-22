@@ -25,3 +25,4 @@ node_modules
 build
 satellite/build.tar.gz
 deploy.sh
+satellite/.env

@@ -10,27 +10,27 @@ export default ({ todo }) => {
       : "list-group-item";
   const allDeps = todo.dependsOn.map(d => context.board.todos[d]);
   const openDeps = allDeps.filter(d => d && d.active);
-  const classNames = ["list-group-item"]
-  if (openDeps.length===0) {
-    classNames.push("text-success")
+  const classNames = ["list-group-item"];
+  if (openDeps.length === 0) {
+    classNames.push("text-success");
   } else {
-    classNames.push("text-danger")
+    classNames.push("text-danger");
   }
   if (!todo.active) {
-    classNames.push("text-muted")
-    classNames.push("text-line-through")
+    classNames.push("text-muted");
+    classNames.push("text-line-through");
   }
   if (todo.id === context.focusedTodo.id) {
-    classNames.push("bg-warning")
+    classNames.push("bg-warning");
   } else {
     // classNames.push("bg-secondary")
   }
   return (
     <li
-      className={classNames.join(" ")}      
+      className={classNames.join(" ")}
       tabIndex="0"
       onClick={() => {
-        context.setFocusedTodo(todo)
+        context.setFocusedTodo(todo);
       }}
       onKeyPress={e => {
         if (e.key === "Delete") {
@@ -40,7 +40,19 @@ export default ({ todo }) => {
           context.setCurrentTodoId(todo.id);
         }
       }}
-    >      
+    >
+      <div style={{ display: "flex" }}>
+        <span>priority</span>
+        <input type="number"
+        style={{
+          width:'40px'
+        }}
+        value={todo.priority || 0}
+        onChange={(e)=>{
+          context.updateTodo({...todo, priority: e.target.value})
+        }}
+        ></input>
+      </div>
       <input
         className="form-check-input"
         type="checkbox"
@@ -55,15 +67,19 @@ export default ({ todo }) => {
           context.updateTodo(todo);
         }}
       />
-      {`-${todo.title}-${openDeps.length}/${allDeps.length}` }
+      {`-${todo.title}-${openDeps.length}/${allDeps.length}`}
       val: {todo.weight}
-      {todo.dateCreate && `- created on: ${new Date(todo.dateCreate).toLocaleDateString()}`}
-      {todo.dateCompleted && `- completed on: ${new Date(todo.dateCompleted).toLocaleDateString()}`}
+      {todo.dateCreate &&
+        `- created on: ${new Date(todo.dateCreate).toLocaleDateString()}`}
+      {todo.dateCompleted &&
+        `- completed on: ${new Date(todo.dateCompleted).toLocaleDateString()}`}
       <button
-      style={{float:"right"}}
-      className="btn btn-primary"
-      onClick={() => context.setCurrentTodoId(todo.id)}
-      >E</button>
+        style={{ float: "right" }}
+        className="btn btn-primary"
+        onClick={() => context.setCurrentTodoId(todo.id)}
+      >
+        E
+      </button>
     </li>
   );
 };

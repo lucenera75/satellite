@@ -124,6 +124,7 @@ class App extends React.Component {
         window.location = "/";
       },
       refreshWeights: () => {
+        console.log("refreshing weights")
         Object.values(this.state.board.todos).forEach(todo => {
           todo.weight = getCumulativeValue(
             todo.id,

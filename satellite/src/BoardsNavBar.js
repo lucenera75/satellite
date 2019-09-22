@@ -5,7 +5,7 @@ export default () => {
   const context = React.useContext(AppContext);
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <ul class="navbar-nav">
+      <ul className="navbar-nav">
         <li>
         <a className="nav-link" href={`/${new Date().toISOString()}`}>
                 +
