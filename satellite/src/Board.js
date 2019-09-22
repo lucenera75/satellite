@@ -13,6 +13,27 @@ export default () => {
   ]);
   return (
     <div>
+          <div
+          style={{
+            display: "flex",
+            flexDirection: "row"
+          }}>
+            Board name: 
+            <input type="text" 
+            className="form-control"
+            value={context.board.name || context.board.id}
+            onChange={(e) => {
+              context.setBoard({...context.board,name:e.target.value})
+            }}></input>
+            <button
+            onClick={(e)=>{
+              if (window.confirm("are you sure?")){
+                alert("at your wish");
+                context.deleteCurrentBoard()
+              }
+            }}
+            >Delete board</button>
+          </div>
       <div
         style={{
           display: "flex",

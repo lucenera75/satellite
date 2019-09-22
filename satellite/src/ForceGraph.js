@@ -59,21 +59,13 @@ export default ({ todo }) => {
             linkCurvature={0.25}
             graphData={data}
             nodeLabel={n => n.title}
-            nodeColor={n => (n.active && "green") || "gray"}
-            // keeping for reference
-            // nodeCanvasObject={(node, ctx, globalScale) => {
-            //   const label = node.title;
-            //   const fontSize = 12/globalScale;
-            //   ctx.font = `${fontSize}px Sans-Serif`;
-            //   const textWidth = ctx.measureText(label).width;
-            //   const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
-            //   ctx.fillStyle = 'rgba(50, 55, 55, 0.8)';
-            //   ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
-            //   ctx.textAlign = 'center';
-            //   ctx.textBaseline = 'middle';
-            //   ctx.fillStyle = node.color;
-            //   ctx.fillText(label, node.x, node.y);
-            // }}
+            nodeColor={n => {
+              debugger
+              if (n.id === context.focusedTodo.id +""){
+                return "red"
+              }
+              return (n.active && "green") || "gray"
+            }}
             ></ForceGraph3D>
         </div>
       )}

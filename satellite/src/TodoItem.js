@@ -19,10 +19,16 @@ export default ({ todo }) => {
     classNames.push("text-muted")
     classNames.push("text-line-through")
   }
+  if (todo.id === context.focusedTodo.id) {
+    classNames.push("bg-warning")
+  } else {
+    // classNames.push("bg-secondary")
+  }
   return (
     <li
       className={classNames.join(" ")}      
       tabIndex="0"
+      onFocus={() => context.setFocusedTodo(todo)}
       onKeyPress={e => {
         if (e.key === "Delete") {
           context.removeTodo(todo);

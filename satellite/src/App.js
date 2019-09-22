@@ -39,22 +39,25 @@ const loadBoard = async () => {
     )).data;
     isNew = false
   } catch (err) {
-    alert("creating")
-    console.log(err)
     isNew = true
   }
   return board;
 };
+const deleteBoard = async id => {
+  return await axios.delete(
+    `${process.env.REACT_APP_SAT_BASE_URL}/boards/${id}`
+  );
+}
 const saveBoard = async board => {
   if (isNew) {
     board.id=boardId
-    await axios.post(
+    return await axios.post(
       `${process.env.REACT_APP_SAT_BASE_URL}/boards`,
       board
     );
     isNew = false
   } else {
-    await axios.put(
+    return await axios.put(
       `${process.env.REACT_APP_SAT_BASE_URL}/boards/${boardId}`,
       board
     );
@@ -80,6 +83,10 @@ class App extends React.Component {
         search(searchTerms).then(filteredIds => this.setState({filteredIds}))
       },
       currentTodo: false,
+      focusedTodo:false,
+      setFocusedTodo: focusedTodo=> {
+        this.setState({focusedTodo})
+      },
       createAndEditNewTodo: () => {
         const todo = this.state.createNewTodo("");
         this.state.setCurrentTodoId(todo.id);
@@ -109,6 +116,10 @@ class App extends React.Component {
         this.setState({ currentTodoId: todoId });
       },
       setBoard: (board,cb) => this.setState({ board },cb),
+      deleteCurrentBoard:async () => {
+        await deleteBoard(this.state.board.id)
+        window.location='/'
+      },
       refreshWeights: () => {
         Object.values(this.state.board.todos).forEach(todo => {
           todo.weight = getCumulativeValue(todo.id, Object.values(this.state.board.todos))
@@ -148,7 +159,7 @@ class App extends React.Component {
       this.state.addTodo(firstTodo);
     }
     loadBoards().then(boards => {
-      this.setState({availableBoards: boards.map(b => b.id)})
+      this.setState({availableBoards: boards.map(b => ({id:b.id, name:b.name}))})
     })
     setInterval(() => {
       if (!this.state.boardLoaded) {return}
