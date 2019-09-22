@@ -60,7 +60,6 @@ export default ({ todo }) => {
             graphData={data}
             nodeLabel={n => n.title}
             nodeColor={n => {
-              debugger
               if (n.id === context.focusedTodo.id +""){
                 return "red"
               }

@@ -3,6 +3,7 @@ import AppContext from "./AppContext";
 
 export default ({ todo }) => {
   const context = React.useContext(AppContext);
+  let isFocused = false;
   const className =
     context.currentTodoId === todo.id
       ? "list-group-item active"
@@ -28,7 +29,9 @@ export default ({ todo }) => {
     <li
       className={classNames.join(" ")}      
       tabIndex="0"
-      onFocus={() => context.setFocusedTodo(todo)}
+      onClick={() => {
+        context.setFocusedTodo(todo)
+      }}
       onKeyPress={e => {
         if (e.key === "Delete") {
           context.removeTodo(todo);
