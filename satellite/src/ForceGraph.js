@@ -1,7 +1,7 @@
 import React from "react";
 import AppContext from "./AppContext";
 import { ForceGraph2D, ForceGraph3D } from "react-force-graph";
-import SpriteText from "three-spritetext"
+import SpriteText from "three-spritetext";
 
 export default ({ todo }) => {
   const context = React.useContext(AppContext);
@@ -60,12 +60,12 @@ export default ({ todo }) => {
             graphData={data}
             nodeLabel={n => n.title}
             nodeColor={n => {
-              if (n.id === context.focusedTodo.id +""){
-                return "red"
+              if (n.id === context.focusedTodo.id + "") {
+                return "red";
               }
-              return (n.active && "green") || "gray"
+              return (n.active && "green") || "gray";
             }}
-            ></ForceGraph3D>
+          ></ForceGraph3D>
         </div>
       )}
     </div>

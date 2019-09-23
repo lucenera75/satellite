@@ -124,7 +124,7 @@ class App extends React.Component {
         window.location = "/";
       },
       refreshWeights: () => {
-        console.log("refreshing weights")
+        console.log("refreshing weights");
         Object.values(this.state.board.todos).forEach(todo => {
           todo.weight = getCumulativeValue(
             todo.id,
@@ -216,11 +216,11 @@ class App extends React.Component {
             const idx = list.indexOf(
               list.find(todo => todo.id === app.state.focusedTodo.id)
             );
-            if (e.keyCode==40 && idx < list.length-1) {
+            if (e.keyCode == 40 && idx < list.length - 1) {
               const next = list[idx + 1];
               app.state.setFocusedTodo(next);
             }
-            if (e.keyCode==38 && idx > 0) {
+            if (e.keyCode == 38 && idx > 0) {
               const next = list[idx - 1];
               app.state.setFocusedTodo(next);
             }

@@ -7,13 +7,17 @@ export default () => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <ul className="navbar-nav">
         <li>
-        <a className="nav-link" href={`/${new Date().toISOString()}`}>
-                +
-              </a>
+          <a className="nav-link" href={`/${new Date().toISOString()}`}>
+            +
+          </a>
         </li>
-        {context.availableBoards.map(b => {          
+        {context.availableBoards.map(b => {
           return (
-            <li className={"nav-item " + (b === context.board.id ? "active" : " ")}>
+            <li
+              className={
+                "nav-item " + (b === context.board.id ? "active" : " ")
+              }
+            >
               <a className="nav-link" href={`/${b.id}`}>
                 {b.name || b.id}
               </a>

@@ -1,9 +1,9 @@
 export default (todoId, todos) => {
-    // debugger
-// if (todoId===1568628316703) {
-//     console.log("...")
-//     debugger
-// }
+  // debugger
+  // if (todoId===1568628316703) {
+  //     console.log("...")
+  //     debugger
+  // }
   let val = 1;
   val += Number((todos.find(t => t.id === todoId) || { priority: 0 }).priority);
   return cumulate(todoId, todos, val);

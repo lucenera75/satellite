@@ -75,22 +75,22 @@ export default class TodoSuggest extends React.Component {
         if (e.key === "Enter") {
           // console.log(this.suggestion,this.state.value)
           const todo = this.context.getCurrentTodo();
-          let newDepId = false
+          let newDepId = false;
           if (this.suggestion) {
-            newDepId = this.suggestion.id
+            newDepId = this.suggestion.id;
             this.suggestion = false;
           } else {
             const newTodo = this.context.createNewTodo(value);
-            newDepId = newTodo.id
+            newDepId = newTodo.id;
           }
           todo.dependsOn.push(newDepId);
           this.context.updateTodo(todo, () => {
             try {
               recursiveCheck(todo.id, this.context.board.todos);
             } catch (err) {
-              alert(err)
-              todo.dependsOn = todo.dependsOn.filter(tid => tid!==newDepId)
-              this.context.updateTodo(todo)
+              alert(err);
+              todo.dependsOn = todo.dependsOn.filter(tid => tid !== newDepId);
+              this.context.updateTodo(todo);
             }
           });
         }

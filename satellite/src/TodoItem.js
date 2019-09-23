@@ -43,14 +43,15 @@ export default ({ todo }) => {
     >
       <div style={{ display: "flex" }}>
         <span>priority</span>
-        <input type="number"
-        style={{
-          width:'40px'
-        }}
-        value={todo.priority || 0}
-        onChange={(e)=>{
-          context.updateTodo({...todo, priority: e.target.value})
-        }}
+        <input
+          type="number"
+          style={{
+            width: "40px"
+          }}
+          value={todo.priority || 0}
+          onChange={e => {
+            context.updateTodo({ ...todo, priority: e.target.value });
+          }}
         ></input>
       </div>
       <input
