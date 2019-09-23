@@ -28,6 +28,7 @@ export default class TodoSuggest extends React.Component {
     this.getSuggestions = this.getSuggestions.bind(this);
   }
 
+  
   getSuggestions = async value => {
     const ids = await search(value);
     return ids
@@ -59,6 +60,8 @@ export default class TodoSuggest extends React.Component {
       suggestions: []
     });
   };
+
+  
 
   render() {
     const { value, suggestions } = this.state;
@@ -96,6 +99,7 @@ export default class TodoSuggest extends React.Component {
               this.context.updateTodo(todo);
             }
           });
+          this.setState({value:""})
         }
         // if (e.key === 'Delete') {
         //   context.removeTodo(todo)
