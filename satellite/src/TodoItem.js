@@ -32,6 +32,7 @@ export default ({ todo }) => {
       onClick={() => {
         context.setFocusedTodo(todo);
       }}
+      onDoubleClick={e => context.setCurrentTodoId(todo.id)}
       onKeyPress={e => {
         if (e.key === "Delete") {
           context.removeTodo(todo);
