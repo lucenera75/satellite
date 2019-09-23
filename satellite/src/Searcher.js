@@ -15,7 +15,10 @@ export const removeFromSearch = id => {
   index.remove(id);
 };
 export const search = async text => {
-  return await index.search(text);
+  return await index.search({
+    query: text,
+    suggest: true
+  });
 };
 
 window.search = search;

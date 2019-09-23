@@ -33,6 +33,15 @@ export default () => {
       >
         create new
       </button>
+      <div>
+        <button
+          className="btn btn-primary"
+          onClick={() => context.removeTodo(context.getCurrentTodo())}
+        >
+          delete
+        </button>
+      </div>
+
       <hr />
       dependants:
       <div />
