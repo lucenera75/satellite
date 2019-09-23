@@ -92,6 +92,12 @@ class App extends React.Component {
         this.state.setCurrentTodoId(todo.id);
       },
       createNewTodo: (title, flush = true) => {
+        const oldTodo = Object.values(this.state.board.todos).find(
+          t => t.title.trim() === title.trim() && t.active
+        );
+        if (oldTodo) {
+          return false;
+        }
         const todo = {
           id: new Date().getTime(),
           dateCreate: new Date().getTime(),

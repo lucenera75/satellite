@@ -81,7 +81,10 @@ export default class TodoSuggest extends React.Component {
             this.suggestion = false;
           } else {
             const newTodo = this.context.createNewTodo(value);
-            newDepId = newTodo.id;
+            newDepId = newTodo && newTodo.id;
+          }
+          if (!newDepId) {
+            return;
           }
           todo.dependsOn.push(newDepId);
           this.context.updateTodo(todo, () => {
