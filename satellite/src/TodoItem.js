@@ -3,14 +3,9 @@ import AppContext from "./AppContext";
 
 export default ({ todo }) => {
   const context = React.useContext(AppContext);
-  let isFocused = false;
-  const className =
-    context.currentTodoId === todo.id
-      ? "list-group-item active"
-      : "list-group-item";
   const allDeps = todo.dependsOn.map(d => context.board.todos[d]);
   const openDeps = allDeps.filter(d => d && d.active);
-  const classNames = ["list-group-item"];
+  const classNames = [];
   if (openDeps.length === 0) {
     classNames.push("text-success");
   } else {
@@ -26,7 +21,8 @@ export default ({ todo }) => {
     // classNames.push("bg-secondary")
   }
   return (
-    <li
+    <tr
+      style={{ fontSize: "10px" }}
       className={classNames.join(" ")}
       tabIndex="0"
       onClick={() => {
@@ -42,46 +38,53 @@ export default ({ todo }) => {
         }
       }}
     >
-      <div style={{ display: "flex" }}>
-        <span>priority</span>
+      <td>
         <input
           type="number"
           style={{
-            width: "40px"
+            width: "30px"
           }}
           value={todo.priority || 0}
           onChange={e => {
             context.updateTodo({ ...todo, priority: e.target.value });
           }}
         ></input>
-      </div>
-      <input
-        className="form-check-input"
-        type="checkbox"
-        checked={!todo.active}
-        onChange={() => {
-          todo.active = !todo.active;
-          if (!todo.active) {
-            todo.dateCompleted = new Date().getTime();
-          } else {
-            todo.dateCompleted = false;
-          }
-          context.updateTodo(todo);
-        }}
-      />
-      {`-${todo.title}-${openDeps.length}/${allDeps.length}`}
-      val: {todo.weight}
-      {todo.dateCreate &&
-        `- created on: ${new Date(todo.dateCreate).toLocaleDateString()}`}
-      {todo.dateCompleted &&
-        `- completed on: ${new Date(todo.dateCompleted).toLocaleDateString()}`}
-      <button
-        style={{ float: "right" }}
-        className="btn btn-primary"
-        onClick={() => context.setCurrentTodoId(todo.id)}
-      >
-        E
-      </button>
-    </li>
+      </td>
+      <td>
+        <input
+          type="checkbox"
+          checked={!todo.active}
+          onChange={() => {
+            todo.active = !todo.active;
+            if (!todo.active) {
+              todo.dateCompleted = new Date().getTime();
+            } else {
+              todo.dateCompleted = false;
+            }
+            context.updateTodo(todo);
+          }}
+        />
+      </td>
+      <td style={{ width: "70%" }}>{todo.title}</td>
+      <td>{`${openDeps.length}/${allDeps.length}`}</td>
+      <td >{todo.weight}</td>
+      <td style={{ width: "30%" }}>
+        {todo.dateCreate &&
+          `- created on: ${new Date(todo.dateCreate).toLocaleDateString()}`}
+        {todo.dateCompleted &&
+          `- completed on: ${new Date(
+            todo.dateCompleted
+          ).toLocaleDateString()}`}
+      </td>
+      <td>
+        <button
+          style={{ float: "right" }}
+          className="btn btn-primary"
+          onClick={() => context.setCurrentTodoId(todo.id)}
+        >
+          E
+        </button>
+      </td>
+    </tr>
   );
 };

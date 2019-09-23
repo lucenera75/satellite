@@ -56,11 +56,11 @@ export default () => {
             value={context.searchTerms}
             onChange={e => context.setSearchTerms(e.target.value)}
           />
-          <ul className="list-group">
+          <table>
             {context.getOrderedList().map(todo => (
               <TodoItem key={todo.id} todo={todo} />
             ))}
-          </ul>
+          </table>
         </div>
         {/* <MemoForceGraph /> */}
         {memoForceGraph}
