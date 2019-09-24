@@ -2,6 +2,7 @@ import React from "react";
 import AppContext from "./AppContext";
 import * as d3 from "d3";
 import "d3-graphviz";
+import ReactModal from "react-modal";
 
 function escapeHtml(unsafe) {
   return unsafe
@@ -14,7 +15,7 @@ function escapeHtml(unsafe) {
     .replace(/"/g, "_")
     .replace(/'/g, "_");
 }
-export default ({ todo }) => {
+export default () => {
   const context = React.useContext(AppContext);
   const ref = React.createRef();
   const elements = [];
@@ -36,14 +37,36 @@ export default ({ todo }) => {
       });
     console.log(elements);
     const el = ref.current;
-    d3
-      .select(el)
-      .graphviz()
-      // .width(1200)
-      // .height(600)
-      .fit(true).renderDot(`digraph  {
-      ${elements.join("\n")}
-    }`);
+    if (context.graphVizOpen && el) {
+      debugger
+      d3
+        .select(el)
+        .graphviz()
+        // .width(1200)
+        // .height(600)
+        .fit(false).renderDot(`digraph  {
+        ${elements.join("\n")}
+      }`);
+    }
   });
-  return <div ref={ref} style={{ width: "400px" }}></div>;
+
+  return (
+    <div>
+      <button onClick={() => context.toggleGraphViz()}>graphviz</button>
+      <ReactModal
+        isOpen={context.graphVizOpen}
+        onRequestClose={() => context.toggleGraphViz()}
+        ariaHideApp={false}
+      >
+        <button
+          style={{ float: "right" }}
+          className="btn btn-info"
+          onClick={() => context.toggleGraphViz()}
+        >
+          X
+        </button>
+        <div ref={ref}></div>
+      </ReactModal>
+    </div>
+  );
 };

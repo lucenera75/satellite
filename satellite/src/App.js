@@ -78,6 +78,10 @@ class App extends React.Component {
       availableBoards: [],
       filteredIds: [],
       searchTerms: "",
+      graphVizOpen: false,
+      toggleGraphViz: () => {
+        this.setState({graphVizOpen: !this.state.graphVizOpen})
+      },
       setSearchTerms: searchTerms => {
         this.setState({ searchTerms });
         search(searchTerms).then(filteredIds => this.setState({ filteredIds }));
