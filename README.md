@@ -21,3 +21,6 @@
  The tasks at the top of the list are the ones that the system consider more important and immediately actionable
  
  The graph shows the tasks and their connections. the bigger the ball the more that task is important to free other tasks.
+
+
+https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install-linux.html

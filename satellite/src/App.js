@@ -80,7 +80,7 @@ class App extends React.Component {
       searchTerms: "",
       graphVizOpen: false,
       toggleGraphViz: () => {
-        this.setState({graphVizOpen: !this.state.graphVizOpen})
+        this.setState({ graphVizOpen: !this.state.graphVizOpen });
       },
       setSearchTerms: searchTerms => {
         this.setState({ searchTerms });
@@ -110,6 +110,8 @@ class App extends React.Component {
           title: title,
           description: "",
           active: true,
+          priority: 0,
+          weight: 1,
           dependsOn: []
         };
         if (flush) {
@@ -150,6 +152,10 @@ class App extends React.Component {
         this.state.setBoard(board);
       },
       removeTodo: todo => {
+        if (Number(todo.id) === 1000) {
+          alert("cannot delete the main task")
+          return
+        }
         const board = { ...this.state.board };
         delete board.todos[todo.id];
         removeFromSearch(todo.id);
@@ -174,7 +180,7 @@ class App extends React.Component {
             if (openDepsB.length > 0) {
               return openDepsA.length - openDepsB.length;
             }
-            return b.weight - a.weight;
+            return (b.weight || 1) - (a.weight  || 1);
             // return
           })
           .filter(todo => {
