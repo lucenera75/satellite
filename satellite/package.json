@@ -10,7 +10,7 @@
     "deep-equal": "^1.1.0",
     "fl": "^0.1.1",
     "flexsearch": "^0.6.30",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "popper": "^1.0.1",
     "react": "^16.9.0",
     "react-autosuggest": "^9.4.3",
